@@ -1,0 +1,147 @@
+service:
+  name: weather-app-api
+
+plugins:
+  - serverless-bundle
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
+  profile: weatherapp
+  environment:
+    COUNTRIES_TABLE_NAME: ${self:custom.CountriesTable.name}
+    CITIES_TABLE_NAME: ${self:custom.CitiesTable.name}
+    WEATHER_GENERIC_TABLE_NAME: ${self:custom.WeatherGeneric.name}
+
+  iamRoleStatements:
+    - ${file(iam/AllGrantsDynamoDBIAM.yml):AllGrantsDynamoDBIAM}
+
+  
+resources:
+  Resources:
+    CountriesTable: ${file(resources/CountriesTable.yml):CountriesTable}
+    CitiesTable: ${file(resources/CitiesTable.yml):CitiesTable}
+    WeatherEsTable: ${file(resources/WeatherTable.yml):WeatherEsTable}
+    WeatherUkTable: ${file(resources/WeatherTable.yml):WeatherUkTable}
+    WeatherUsTable: ${file(resources/WeatherTable.yml):WeatherUsTable}
+    WeatherGeneric: ${file(resources/WeatherTable.yml):WeatherGeneric}
+
+functions:
+  createCountry:
+    handler: src/handlers/createCountry.handler
+    events:
+      - http:
+          method: POST
+          path: /country
+
+  getCountries:
+    handler: src/handlers/getCountries.handler
+    events:
+      - http:
+          method: GET
+          path: /countries
+          cors: true
+
+  getCountry:
+    handler: src/handlers/getCountry.handler
+    events:
+      - http:
+          method: GET
+          path: /country/{countryCode}
+          cors: true
+
+  createCity:
+    handler: src/handlers/createCity.handler
+    events:
+      - http:
+          method: POST
+          path: /city
+
+  getCities:
+    handler: src/handlers/getCities.handler
+    events:
+      - http:
+          method: GET
+          path: /cities
+          cors: true
+
+  getCitiesByCountry:
+    handler: src/handlers/getCities.handlerByCountry
+    events:
+      - http:
+          method: GET
+          path: /cities/{countryCode}
+          cors: true
+
+  getCity:
+    handler: src/handlers/getCity.handler
+    events:
+      - http:
+          method: GET
+          path: /city/{cityCode}
+          cors: true
+
+  getWeatherFromCity:
+    handler: src/handlers/getWeatherFromCity.handler
+    events:
+      - http:
+          method: GET
+          path: /weather/{cityCode}
+          cors: true
+
+  getCurrentWeatherFromCity:
+    handler: src/handlers/getWeatherFromCity.currentWeatherFromCityHandler
+    events:
+      - http:
+          method: GET
+          path: /weather/{cityCode}/current
+          cors: true
+
+  addCityWeather:
+    handler: src/handlers/addCityWeather.addHandler
+    events:
+      - http:
+          method: POST
+          path: /weather/{cityCode}
+
+  fixCityWeather:
+    handler: src/handlers/addCityWeather.fixCityWeatherHandler
+    events:
+      - http:
+          method: PATCH
+          path: /weather/{cityCode}/{weatherId}
+
+  getCityWeatherById:
+    handler: src/handlers/getWeather.getWeatherHandler
+    events:
+      - http:
+          method: GET
+          path: /weather/{cityCode}/{weatherId}
+          cors: true
+
+custom:
+  CountriesTable:
+    name: !Ref CountriesTable
+    arn: !GetAtt CountriesTable.Arn
+  CitiesTable:
+    name: !Ref CitiesTable
+    arn: !GetAtt CitiesTable.Arn  
+  WeatherEsTable:
+    name: !Ref WeatherEsTable
+    arn: !GetAtt WeatherEsTable.Arn
+  WeatherUkTable:
+    name: !Ref WeatherUkTable
+    arn: !GetAtt WeatherUkTable.Arn
+  WeatherUsTable:
+    name: !Ref WeatherUsTable
+    arn: !GetAtt WeatherUsTable.Arn
+  WeatherGeneric:
+    name: !Ref WeatherGeneric
+    arn: !GetAtt WeatherGeneric.Arn
+
+  bundle:
+    linting: false

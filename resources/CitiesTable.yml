@@ -1,0 +1,20 @@
+CitiesTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: weatherappCities-${self:provider.stage}
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: cityCode
+        AttributeType: S
+      - AttributeName: countryCode
+        AttributeType: S
+    KeySchema:
+      - AttributeName: cityCode
+        KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: CountryIndex
+        KeySchema:
+        - AttributeName: countryCode
+          KeyType: HASH
+        Projection:
+          ProjectionType: ALL

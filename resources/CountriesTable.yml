@@ -1,0 +1,11 @@
+CountriesTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: weatherappCountries-${self:provider.stage}
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: countryCode
+        AttributeType: S
+    KeySchema:
+      - AttributeName: countryCode
+        KeyType: HASH

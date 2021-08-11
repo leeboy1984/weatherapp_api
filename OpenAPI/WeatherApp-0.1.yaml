@@ -1,0 +1,514 @@
+---
+openapi: 3.0.1
+info:
+  title: WeatherApp - Abel Zafra
+  description: Example of an API for a WeatherApp
+  version: "0.1"
+servers:
+- url: https://api.weatherapp.abelzafra.es
+paths:
+  /weather/{cityCode}:
+    get:
+      description: Get Weather Prediction for selected city
+      parameters:
+      - name: cityCode
+        in: path
+        description: CityCode in order to reach information
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                "0":
+                  value: '[{"cityCode":"es-mad","id":"972111b6-f462-4550-b178-b142c6268619","countryCode":"es","weather":{"dt":1628683200,"pop":0,"visibility":10000,"dt_txt":"2021-08-11 12:00:00","weather":[{"icon":"01d","description":"clear sky","main":"Clear","id":800}],"main":{"grnd_level":943,"temp":31.52,"temp_min":31.52,"temp_kf":-3.95,"humidity":34,"pressure":1018,"sea_level":1018,"feels_like":30.74,"temp_max":35.47},"clouds":{"all":2},"sys":{"pod":"d"},"wind":{"speed":2.15,"deg":202,"gust":3.85}},"timestamp":1628683200},{"cityCode":"es-mad","id":"f54bd392-d22a-4fb7-9ea0-50bd84dd6fcd","countryCode":"es","weather":{"dt":1628694000,"pop":0,"visibility":10000,"dt_txt":"2021-08-11 15:00:00","weather":[{"icon":"02d","description":"few clouds","main":"Clouds","id":801}],"main":{"grnd_level":941,"temp":35.49,"temp_min":35.49,"temp_kf":-2.97,"humidity":24,"pressure":1014,"sea_level":1014,"feels_like":34.2,"temp_max":38.46},"clouds":{"all":22},"sys":{"pod":"d"},"wind":{"speed":3.06,"deg":242,"gust":6.31}},"timestamp":1628694000},{"cityCode":"es-mad","id":"bbb16c72-0187-46a6-a4c3-eefd081327b0","countryCode":"es","weather":{"dt":1628704800,"pop":0.29,"rain":{"3h":0.18},"visibility":10000,"dt_txt":"2021-08-11 18:00:00","weather":[{"icon":"10d","description":"light rain","main":"Rain","id":500}],"main":{"grnd_level":941,"temp":36.18,"temp_min":36.18,"temp_kf":0,"humidity":19,"pressure":1012,"sea_level":1012,"feels_like":34.25,"temp_max":36.18},"clouds":{"all":43},"sys":{"pod":"d"},"wind":{"speed":4.27,"deg":168,"gust":7.2}},"timestamp":1628704800},{"cityCode":"es-mad","id":"ad4b963d-4f42-44c3-8552-0e926664c42b","countryCode":"es","weather":{"dt":1628715600,"pop":0.32,"rain":{"3h":0.11},"visibility":10000,"dt_txt":"2021-08-11 21:00:00","weather":[{"icon":"10n","description":"light rain","main":"Rain","id":500}],"main":{"grnd_level":943,"temp":27.54,"temp_min":27.54,"temp_kf":0,"humidity":39,"pressure":1017,"sea_level":1017,"feels_like":27.22,"temp_max":27.54},"clouds":{"all":51},"sys":{"pod":"n"},"wind":{"speed":5.01,"deg":51,"gust":7.84}},"timestamp":1628715600},{"cityCode":"es-mad","id":"4354c2a6-c42a-4441-b74d-1a552f139f91","countryCode":"es","weather":{"dt":1628726400,"pop":0.27,"visibility":10000,"dt_txt":"2021-08-12 00:00:00","weather":[{"icon":"03n","description":"scattered clouds","main":"Clouds","id":802}],"main":{"grnd_level":943,"temp":25.58,"temp_min":25.58,"temp_kf":0,"humidity":45,"pressure":1018,"sea_level":1018,"feels_like":25.37,"temp_max":25.58},"clouds":{"all":27},"sys":{"pod":"n"},"wind":{"speed":5.08,"deg":63,"gust":7.73}},"timestamp":1628726400},{"cityCode":"es-mad","id":"48b591a3-37cd-4e82-b4dd-acd12a04f0ff","countryCode":"es","weather":{"dt":1628737200,"pop":0,"visibility":10000,"dt_txt":"2021-08-12 03:00:00","weather":[{"icon":"01n","description":"clear sky","main":"Clear","id":800}],"main":{"grnd_level":943,"temp":24.52,"temp_min":24.52,"temp_kf":0,"humidity":48,"pressure":1017,"sea_level":1017,"feels_like":24.28,"temp_max":24.52},"clouds":{"all":0},"sys":{"pod":"n"},"wind":{"speed":3.88,"deg":48,"gust":4.95}},"timestamp":1628737200},{"cityCode":"es-mad","id":"99e31236-1c04-42c6-9027-6509776ab440","countryCode":"es","weather":{"dt":1628748000,"pop":0,"visibility":10000,"dt_txt":"2021-08-12 06:00:00","weather":[{"icon":"01d","description":"clear sky","main":"Clear","id":800}],"main":{"grnd_level":943,"temp":24.35,"temp_min":24.35,"temp_kf":0,"humidity":46,"pressure":1018,"sea_level":1018,"feels_like":24.04,"temp_max":24.35},"clouds":{"all":0},"sys":{"pod":"d"},"wind":{"speed":2.36,"deg":60,"gust":3.12}},"timestamp":1628748000}]'
+        "404":
+          description: Information not found
+        "500":
+          description: Something went wrong
+      servers:
+      - url: https://api.weatherapp.abelzafra.es
+    post:
+      description: Endpoint used for adding weather data to the system
+      parameters:
+      - name: cityCode
+        in: path
+        description: CityCode in order to add information
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/weather_cityCode_body'
+            examples:
+              "0":
+                value: |-
+                  {
+                              "dt": 0,
+                              "main": {
+                                  "temp": 11.86,
+                                  "feels_like": 11.53,
+                                  "temp_min": 11.86,
+                                  "temp_max": 11.86,
+                                  "pressure": 1016,
+                                  "sea_level": 1016,
+                                  "grnd_level": 1010,
+                                  "humidity": 93,
+                                  "temp_kf": 0
+                              },
+                              "weather": [
+                                  {
+                                      "id": 804,
+                                      "main": "Clouds",
+                                      "description": "overcast clouds",
+                                      "icon": "04d"
+                                  }
+                              ],
+                              "clouds": {
+                                  "all": 99
+                              },
+                              "wind": {
+                                  "speed": 1.93,
+                                  "deg": 178,
+                                  "gust": 3.78
+                              },
+                              "visibility": 10000,
+                              "pop": 0,
+                              "sys": {
+                                  "pod": "d"
+                              },
+                              "dt_txt": "2021-08-12 06:00:00"
+                          }
+      responses:
+        "201":
+          description: Record stored successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+              examples:
+                "0":
+                  value: '{"id":"d6358fcc-a984-425a-a067-dd86d7ff50c5","cityCode":"es-mad","countryCode":"es","timestamp":0,"weather":{"dt":0,"main":{"temp":11.86,"feels_like":11.53,"temp_min":11.86,"temp_max":11.86,"pressure":1016,"sea_level":1016,"grnd_level":1010,"humidity":93,"temp_kf":0},"weather":[{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04d"}],"clouds":{"all":99},"wind":{"speed":1.93,"deg":178,"gust":3.78},"visibility":10000,"pop":0,"sys":{"pod":"d"},"dt_txt":"2021-08-12 06:00:00"}}'
+        "500":
+          description: Something went wrong
+      servers:
+      - url: https://api.weatherapp.abelzafra.es
+    servers:
+    - url: https://api.weatherapp.abelzafra.es
+  /cities/{countryCode}:
+    get:
+      description: Endpoint that returns cities from certain country
+      parameters:
+      - name: countryCode
+        in: path
+        description: CountryCode in order to reach information. ISO2 format
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                "0":
+                  value: '[{"cityName":"Madrid","cityCode":"es-mad","countryCode":"es"},{"cityName":"Valencia","cityCode":"es-val","countryCode":"es"}]'
+        "404":
+          description: Information not found
+        "500":
+          description: Something went wrong
+      servers:
+      - url: https://api.weatherapp.abelzafra.es
+    servers:
+    - url: https://api.weatherapp.abelzafra.es
+  /weather/{cityCode}/current:
+    get:
+      description: Endpoint that returns current weather conditions for provided city (cityCode)
+      parameters:
+      - name: cityCode
+        in: path
+        description: CityCode in order to reach information
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfull response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              examples:
+                "0":
+                  value: '{"cityCode":"es-mad","id":"972111b6-f462-4550-b178-b142c6268619","countryCode":"es","weather":{"dt":1628683200,"pop":0,"visibility":10000,"dt_txt":"2021-08-11 12:00:00","weather":[{"icon":"01d","description":"clear sky","main":"Clear","id":800}],"main":{"grnd_level":943,"temp":31.52,"temp_min":31.52,"temp_kf":-3.95,"humidity":34,"pressure":1018,"sea_level":1018,"feels_like":30.74,"temp_max":35.47},"clouds":{"all":2},"sys":{"pod":"d"},"wind":{"speed":2.15,"deg":202,"gust":3.85}},"timestamp":1628683200}'
+        "404":
+          description: Information not found
+        "500":
+          description: Something went wrong
+      servers:
+      - url: https://api.weatherapp.abelzafra.es
+    servers:
+    - url: https://api.weatherapp.abelzafra.es
+  /country:
+    post:
+      description: Endpoint used for adding countries to the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/country_body'
+            examples:
+              "0":
+                value: |-
+                  {
+                      "countryCode": "fr",
+                      "countryName": "France"
+                  }
+      responses:
+        "201":
+          description: Information Stored successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+              examples:
+                "0":
+                  value: |-
+                    {
+                      countryName: 'Spain',
+                      countryCode: 'es'
+                    }
+        "500":
+          description: Something went wrong
+      servers:
+      - url: https://api.weatherapp.abelzafra.es
+    servers:
+    - url: https://api.weatherapp.abelzafra.es
+  /countries:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                "0":
+                  value: '[{"countryName":"United Kingdom","countryCode":"uk"},{"countryName":"United States","countryCode":"us"},{"countryName":"Spain","countryCode":"es"}]'
+        "404":
+          description: No countries found
+        "500":
+          description: Something went wrong
+      servers:
+      - url: https://api.weatherapp.abelzafra.es
+    servers:
+    - url: https://api.weatherapp.abelzafra.es
+  /city:
+    post:
+      description: Endpoint used for adding cities to the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/city_body'
+      responses:
+        "201":
+          description: Record stored successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_2'
+              examples:
+                "0":
+                  value: |-
+                    {
+                      cityName: 'Madrid',
+                      cityCode: 'es-mad',
+                      countryCode: 'es'
+                    }
+        "500":
+          description: Something went wrong
+      servers:
+      - url: https://api.weatherapp.abelzafra.es
+    servers:
+    - url: https://api.weatherapp.abelzafra.es
+components:
+  schemas:
+    weathercityCode_weather:
+      type: object
+      properties:
+        icon:
+          type: string
+        description:
+          type: string
+        main:
+          type: string
+        id:
+          type: integer
+    weathercityCode_main:
+      type: object
+      properties:
+        temp:
+          type: number
+        temp_min:
+          type: number
+        grnd_level:
+          type: integer
+        temp_kf:
+          type: integer
+        humidity:
+          type: integer
+        pressure:
+          type: integer
+        sea_level:
+          type: integer
+        feels_like:
+          type: number
+        temp_max:
+          type: number
+    weathercityCode_clouds:
+      type: object
+      properties:
+        all:
+          type: integer
+    weathercityCode_sys:
+      type: object
+      properties:
+        pod:
+          type: string
+    weathercityCode_wind:
+      type: object
+      properties:
+        deg:
+          type: integer
+        speed:
+          type: number
+        gust:
+          type: number
+    weather_cityCode_body:
+      type: object
+      properties:
+        dt:
+          type: integer
+        pop:
+          type: integer
+        visibility:
+          type: integer
+        dt_txt:
+          type: string
+        weather:
+          type: array
+          items:
+            $ref: '#/components/schemas/weathercityCode_weather'
+        main:
+          $ref: '#/components/schemas/weathercityCode_main'
+        clouds:
+          $ref: '#/components/schemas/weathercityCode_clouds'
+        sys:
+          $ref: '#/components/schemas/weathercityCode_sys'
+        wind:
+          $ref: '#/components/schemas/weathercityCode_wind'
+    inline_response_201:
+      type: object
+      properties:
+        cityCode:
+          type: string
+        countryCode:
+          type: string
+        weather:
+          type: object
+          properties:
+            dt:
+              type: integer
+            pop:
+              type: integer
+            visibility:
+              type: integer
+            dt_txt:
+              type: string
+            weather:
+              type: array
+              items:
+                type: object
+                properties:
+                  icon:
+                    type: string
+                  description:
+                    type: string
+                  main:
+                    type: string
+                  id:
+                    type: integer
+            main:
+              type: object
+              properties:
+                temp:
+                  type: number
+                temp_min:
+                  type: number
+                grnd_level:
+                  type: integer
+                temp_kf:
+                  type: integer
+                humidity:
+                  type: integer
+                pressure:
+                  type: integer
+                sea_level:
+                  type: integer
+                feels_like:
+                  type: number
+                temp_max:
+                  type: number
+            clouds:
+              type: object
+              properties:
+                all:
+                  type: integer
+            sys:
+              type: object
+              properties:
+                pod:
+                  type: string
+            wind:
+              type: object
+              properties:
+                deg:
+                  type: integer
+                speed:
+                  type: number
+                gust:
+                  type: number
+        id:
+          type: string
+        timestamp:
+          type: integer
+    inline_response_200:
+      type: object
+      properties:
+        cityCode:
+          type: string
+        countryCode:
+          type: string
+        weather:
+          type: object
+          properties:
+            dt:
+              type: integer
+            pop:
+              type: integer
+            visibility:
+              type: integer
+            dt_txt:
+              type: string
+            weather:
+              type: array
+              items:
+                type: object
+                properties:
+                  icon:
+                    type: string
+                  description:
+                    type: string
+                  main:
+                    type: string
+                  id:
+                    type: integer
+            main:
+              type: object
+              properties:
+                grnd_level:
+                  type: integer
+                temp:
+                  type: number
+                temp_min:
+                  type: number
+                temp_kf:
+                  type: number
+                humidity:
+                  type: integer
+                pressure:
+                  type: integer
+                sea_level:
+                  type: integer
+                feels_like:
+                  type: number
+                temp_max:
+                  type: number
+            clouds:
+              type: object
+              properties:
+                all:
+                  type: integer
+            sys:
+              type: object
+              properties:
+                pod:
+                  type: string
+            wind:
+              type: object
+              properties:
+                deg:
+                  type: integer
+                speed:
+                  type: number
+                gust:
+                  type: number
+        id:
+          type: string
+        timestamp:
+          type: integer
+    country_body:
+      type: object
+      properties:
+        countryCode:
+          type: string
+        countryName:
+          type: string
+    inline_response_201_1:
+      type: object
+      properties:
+        countryName:
+          type: string
+        countryCode:
+          type: string
+    city_body:
+      type: object
+      properties:
+        cityName:
+          type: string
+        cityCode:
+          type: string
+        countryCode:
+          type: string
+    inline_response_201_2:
+      type: object
+      properties:
+        cityCode:
+          type: string
+        cityName:
+          type: string
+        countryCode:
+          type: string

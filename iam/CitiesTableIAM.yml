@@ -1,0 +1,6 @@
+CitiesTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:*
+  Resource:
+    - ${self:custom.CitiesTable.arn}

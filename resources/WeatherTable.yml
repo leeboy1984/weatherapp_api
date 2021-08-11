@@ -1,0 +1,123 @@
+WeatherEsTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: weatherappCitiesData-${self:provider.stage}-es
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: cityCode
+        AttributeType: S
+      - AttributeName: timestamp
+        AttributeType: N
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: CityIndex
+        KeySchema:
+        - AttributeName: cityCode
+          KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+      - IndexName: CityOrderedIndex
+        KeySchema:
+        - AttributeName: cityCode
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+
+WeatherUsTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: weatherappCitiesData-${self:provider.stage}-us
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: cityCode
+        AttributeType: S
+      - AttributeName: timestamp
+        AttributeType: N
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: CityIndex
+        KeySchema:
+        - AttributeName: cityCode
+          KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+      - IndexName: CityOrderedIndex
+        KeySchema:
+        - AttributeName: cityCode
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+
+WeatherUkTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: weatherappCitiesData-${self:provider.stage}-uk
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: cityCode
+        AttributeType: S
+      - AttributeName: timestamp
+        AttributeType: N
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: CityIndex
+        KeySchema:
+        - AttributeName: cityCode
+          KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+      - IndexName: CityOrderedIndex
+        KeySchema:
+        - AttributeName: cityCode
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+
+WeatherGeneric:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: weatherappCitiesData-${self:provider.stage}
+    BillingMode: PAY_PER_REQUEST
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: cityCode
+        AttributeType: S
+      - AttributeName: timestamp
+        AttributeType: N
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+    GlobalSecondaryIndexes:
+      - IndexName: CityIndex
+        KeySchema:
+        - AttributeName: cityCode
+          KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+      - IndexName: CityOrderedIndex
+        KeySchema:
+        - AttributeName: cityCode
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL

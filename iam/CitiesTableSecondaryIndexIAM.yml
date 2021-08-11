@@ -1,0 +1,6 @@
+CitiesTableSecondaryIndexIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:GetItem
+  Resource:
+    - arn:aws:dynamodb:eu-west-1:299463580670:table/weatherappCities-dev2/index/CountryIndex
